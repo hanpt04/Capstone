@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/capstone-proposals")
+@RequestMapping("/api/capstone-proposal")
 public class CapstoneProposalController {
     @Autowired
     private CapstoneProposalService capstoneProposalService;

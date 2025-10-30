@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -20,4 +22,6 @@ public class Semester {
     private boolean isCurrent;
     private String semesterCode;
     private int year;
+    private Date StartDate;
+    private Date EndDate;
 }

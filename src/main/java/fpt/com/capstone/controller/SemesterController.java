@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/semesters")
+@RequestMapping("/api/semester")
 public class SemesterController {
     @Autowired
     private SemesterService semesterService;

@@ -54,7 +54,7 @@ public class CapstoneProposal {
 
     public enum ProposalStatus {
         DUPLICATE_REJECTED //bị trùng
-        , DUPLICATE_ACCEPTED //đc qua vòng check trùng
+        ,DUPLICATE_ACCEPTED //đc qua vòng check trùng
         ,REVIEW_1 //review lần 1
         ,REVIEW_2 //review lần 2
         ,REVIEW_3 //review lần 3
@@ -63,6 +63,4 @@ public class CapstoneProposal {
         ,FAILED //bị đánh rớt
         ,COMPLETED //hoàn thành
     }
-
-
 }

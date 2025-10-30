@@ -56,7 +56,5 @@ public abstract class Account {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.role = role;
-
-
     }
 }

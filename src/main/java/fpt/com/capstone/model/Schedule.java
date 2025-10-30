@@ -1,4 +1,5 @@
 package fpt.com.capstone.model;
 
-public class Schedule {
+public class Schedule   {
 }
+

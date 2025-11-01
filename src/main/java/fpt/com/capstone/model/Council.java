@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-class Council {
+public class Council {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

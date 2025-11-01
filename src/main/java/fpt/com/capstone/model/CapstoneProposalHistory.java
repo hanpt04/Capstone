@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -41,6 +42,7 @@ public class CapstoneProposalHistory {
     @Column(columnDefinition = "TEXT")
     private String Func;
 
+    private Date rejectDate;
     private boolean isAdmin1;
     private boolean isAdmin2 ;
     @CreationTimestamp

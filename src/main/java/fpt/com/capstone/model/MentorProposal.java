@@ -9,17 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ScheduleCouncil{
+public class MentorProposal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @JoinColumn(name = "schedule_id")
     @ManyToOne
-    private Schedule schedule;
-    @JoinColumn(name = "council_id")
+    @JoinColumn(name = "mentor_id")
+    private Lecturer mentor;
     @ManyToOne
-    private Council council;
-
-    int proposalId;
-
+    @JoinColumn(name = "proposal_id")
+    private CapstoneProposal proposal;
 }

@@ -1,10 +1,7 @@
 package fpt.com.capstone.security;
 
 import fpt.com.capstone.exception.CustomException;
-import fpt.com.capstone.model.Account;
-import fpt.com.capstone.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

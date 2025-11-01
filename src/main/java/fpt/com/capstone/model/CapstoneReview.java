@@ -25,6 +25,5 @@ public class CapstoneReview {
     private Lecturer lecturer;
     private boolean isPass;
     private int reviewRow;
-
 }
 

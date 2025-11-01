@@ -1,8 +1,5 @@
 package fpt.com.capstone;
 
-import fpt.com.capstone.model.Account;
-import fpt.com.capstone.model.Student;
-import fpt.com.capstone.repository.StudentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

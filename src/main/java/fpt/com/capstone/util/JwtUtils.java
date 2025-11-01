@@ -1,6 +1,5 @@
 package fpt.com.capstone.util;
 
-import fpt.com.capstone.model.Account;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

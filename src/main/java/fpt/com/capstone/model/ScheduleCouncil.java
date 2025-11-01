@@ -22,4 +22,9 @@ public class ScheduleCouncil{
 
     int proposalId;
 
+    private int status;
+    // 1 đã đc phân lịch
+    // 2 hoàn thành
+    // 3 cancel
+
 }

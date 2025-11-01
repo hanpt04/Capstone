@@ -18,19 +18,7 @@ public class UserProfileResponse {
     private String phoneNumber;
     private String role;
     private Boolean status;
-    private String code; // studentCode, lecturerCode, mentorCode
-    private Double gpa; // for Student only
+    private String lecturerCode;
     private LocalDateTime createdAt;
 
-    // For Student with Mentor info
-    private MentorInfo mentor;
-
-    @Data
-    @Builder
-    public static class MentorInfo {
-        private Integer id;
-        private String fullName;
-        private String email;
-        private String mentorCode;
-    }
 }

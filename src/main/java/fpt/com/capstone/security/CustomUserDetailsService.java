@@ -1,9 +1,12 @@
 package fpt.com.capstone.security;
 
 import fpt.com.capstone.exception.CustomException;
+import fpt.com.capstone.model.Lecturer;
+import fpt.com.capstone.repository.LecturerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,38 +19,40 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final AccountRepository accountRepository;
+    private final LecturerRepository lecturerRepository;
 
     @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        Account account = accountRepository.findById(Integer.parseInt(userId))
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Lecturer lecturer = lecturerRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        if (!account.isStatus()) {
-            throw new CustomException("Tài khoản đã bị vô hiệu hóa", HttpStatus.FORBIDDEN);
+        if (!lecturer.isStatus()) {
+            throw new RuntimeException("Account is disabled");
         }
 
-        return new org.springframework.security.core.userdetails.User(
-                String.valueOf(account.getId()),
-                account.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + account.getRole().name()))
-        );
+        return User.builder()
+                .username(String.valueOf(lecturer.getId()))
+                .password(lecturer.getPassword())
+                .authorities(Collections.singletonList(
+                        new SimpleGrantedAuthority("ROLE_" + lecturer.getRole().name())
+                ))
+                .build();
     }
 
-    @Transactional
-    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    public UserDetails loadUserById(Integer userId) {
+        Lecturer lecturer = lecturerRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("Lecturer not found: " + userId));
 
-        if (!account.isStatus()) {
-            throw new CustomException("Tài khoản đã bị vô hiệu hóa", HttpStatus.FORBIDDEN);
+        if (!lecturer.isStatus()) {
+            throw new RuntimeException("Account is disabled");
         }
 
-        return new org.springframework.security.core.userdetails.User(
-                String.valueOf(account.getId()),
-                account.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + account.getRole().name()))
-        );
+        return User.builder()
+                .username(String.valueOf(lecturer.getId()))
+                .password(lecturer.getPassword())
+                .authorities(Collections.singletonList(
+                        new SimpleGrantedAuthority("ROLE_" + lecturer.getRole().name())
+                ))
+                .build();
     }
 }

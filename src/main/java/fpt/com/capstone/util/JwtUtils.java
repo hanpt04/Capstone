@@ -1,5 +1,6 @@
 package fpt.com.capstone.util;
 
+import fpt.com.capstone.model.Lecturer;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -27,37 +28,36 @@ public class JwtUtils {
 
     private final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    // Get signing key from secret
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // Generate Access Token
-    public String generateAccessToken(Account account) {
-        return generateToken(account, jwtExpirationMs);
+    // Generate token cho Lecturer (ADMIN, MENTOR, LECTURER)
+    public String generateAccessToken(Lecturer lecturer) {
+        return generateToken(lecturer.getId(), lecturer.getEmail(),
+                "ROLE_" + lecturer.getRole().name(), jwtExpirationMs);
     }
 
-    // Generate Refresh Token
-    public String generateRefreshToken(Account account) {
-        return generateToken(account, refreshTokenExpirationMs);
+    public String generateRefreshToken(Lecturer lecturer) {
+        return generateToken(lecturer.getId(), lecturer.getEmail(),
+                "ROLE_" + lecturer.getRole().name(), refreshTokenExpirationMs);
     }
 
-    private String generateToken(Account account, Long expiration) {
+    private String generateToken(Integer userId, String email, String role, Long expiration) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", account.getRole().name());
-        claims.put("email", account.getEmail());
+        claims.put("role", role);
+        claims.put("email", email);
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(String.valueOf(account.getId()))
+                .setSubject(String.valueOf(userId))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS512)
                 .compact();
     }
 
-    // Get Claims from Token
     private Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -66,25 +66,21 @@ public class JwtUtils {
                 .getBody();
     }
 
-    // Get User ID from Token
     public Integer getUserIdFromToken(String token) {
         Claims claims = getClaims(token);
         return Integer.parseInt(claims.getSubject());
     }
 
-    // Get Email from Token
     public String getEmailFromToken(String token) {
         Claims claims = getClaims(token);
         return claims.get("email", String.class);
     }
 
-    // Get Role from Token
     public String getRoleFromToken(String token) {
         Claims claims = getClaims(token);
         return claims.get("role", String.class);
     }
 
-    // Validate Token
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -106,7 +102,6 @@ public class JwtUtils {
         return false;
     }
 
-    // Get Expiration Time
     public Long getExpirationTime() {
         return jwtExpirationMs;
     }

@@ -24,7 +24,7 @@ public class AuthController {
 
     /**
      * POST /api/auth/login
-     * Đăng nhập (tất cả roles)
+     * Đăng nhập cho Admin, Mentor, Lecturer (KHÔNG có Student)
      */
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {

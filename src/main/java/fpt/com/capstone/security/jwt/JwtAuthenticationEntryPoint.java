@@ -29,16 +29,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-        body.put("error", "Unauthorized");
-        body.put("message", "Bạn cần đăng nhập để truy cập tài nguyên này");
-        body.put("path", request.getServletPath());
-        body.put("timestamp", LocalDateTime.now());
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.writeValue(response.getOutputStream(), body);
+        response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"Authentication required\"}");
     }
 }

@@ -42,5 +42,15 @@ public class GlobalExceptionHandler {
         error.put("error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    //xử lí lỗi chương trình đảm bảo chương trình không bị sập
+
+
+    @ExceptionHandler(DuplicateProposalException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicateProposalException(DuplicateProposalException ex) {
+        // Tạo một body lỗi chi tiết
+        Map<String, Object> errorBody = new HashMap<>();
+        errorBody.put("message", ex.getMessage());
+        errorBody.put("result", ex.getResult());
+
+        return new ResponseEntity<>(errorBody, HttpStatus.CONFLICT);
+    }
 }

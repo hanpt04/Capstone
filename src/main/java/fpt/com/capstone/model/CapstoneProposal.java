@@ -8,8 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "capstone_proposals")
@@ -34,19 +34,24 @@ public class CapstoneProposal {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ProposalStatus status;
+    private ProposalStatus status = ProposalStatus.SUBMITTED;
     @ManyToOne
     @JoinColumn(name = "semester_id")
     private Semester semester;
     private String attachmentUrl;
-    private Date approvedDate;
-    @Column(columnDefinition = "TEXT")
-    private String nonFunc;
-    @Column(columnDefinition = "TEXT")
-    private String Func;
 
-    private boolean isAdmin1 =false;
-    private boolean isAdmin2 =false;
+    @ElementCollection
+    private List<String> nonFunc;
+    @ElementCollection
+    private List<String> func;
+
+    @Embedded
+    private ProposalStudents students;
+
+    @Column(nullable = true)
+    private Boolean isAdmin1;
+    @Column(nullable = true)
+    private Boolean isAdmin2;
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -54,7 +59,9 @@ public class CapstoneProposal {
     private LocalDateTime updatedAt;
 
     public enum ProposalStatus {
+        SUBMITTED,// Moi nop
         DUPLICATE_REJECTED //bị trùng
+        ,REJECT_BY_ADMIN //bị admin từ chối
         ,DUPLICATE_ACCEPTED //đc qua vòng check trùng
         ,REVIEW_1 //review lần 1
         ,REVIEW_2 //review lần 2
@@ -64,4 +71,32 @@ public class CapstoneProposal {
         ,FAILED //bị đánh rớt
         ,COMPLETED //hoàn thành
     }
+
+    @Embeddable
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ProposalStudents {
+
+        private String student1Id;
+        private String student1Name;
+
+        private String student2Id;
+        private String student2Name;
+
+        private String student3Id;
+        private String student3Name;
+
+        private String student4Id;
+        private String student4Name;
+
+        private String student5Id;
+        private String student5Name;
+
+        private String student6Id;
+        private String student6Name;
+    }
 }
+
+
+

@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/capstone-proposal")
+@CrossOrigin("*")
 public class CapstoneProposalController {
     @Autowired
     private CapstoneProposalService capstoneProposalService;
@@ -20,11 +21,20 @@ public class CapstoneProposalController {
         List<CapstoneProposal> proposals = capstoneProposalService.getAll();
         return ResponseEntity.ok(proposals);
     }
+
     @PostMapping
-    public ResponseEntity<CapstoneProposal> createProposal(@RequestBody CapstoneProposal proposal) {
-        CapstoneProposal createdProposal = capstoneProposalService.save(proposal);
-        return ResponseEntity.ok(createdProposal);
+    public CapstoneProposal createProposal(@RequestBody CapstoneProposal proposal) {
+        return capstoneProposalService.save(proposal);
     }
+
+    @PutMapping
+    public CapstoneProposal reviewProposal(@RequestParam int proposalId, @RequestParam Boolean isApproved, @RequestParam String reason) {
+
+        return capstoneProposalService.reviewProposal( proposalId, isApproved, reason);
+    }
+
+
+
     @GetMapping("{id}")
     public ResponseEntity<CapstoneProposal> findById( @PathVariable int id) {
         return ResponseEntity.ok(capstoneProposalService.findById(id));

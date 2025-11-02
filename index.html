@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ngrok Button</title>
+</head>
+<body>
+<button id="fetchBtn">Fetch Semester</button>
+
+<pre id="output"></pre>
+
+<script>
+    const btn = document.getElementById('fetchBtn');
+    const output = document.getElementById('output');
+
+    btn.addEventListener('click', async () => {
+        try {
+            const res = await fetch('https://7496bed666d7.ngrok-free.app/api/semester', {
+                headers: {
+                    'ngrok-skip-browser-warning': 'any-value'
+                }
+            });
+            const data = await res.text();
+            output.textContent = data;
+        } catch (err) {
+            output.textContent = 'Error: ' + err;
+        }
+    });
+</script>
+</body>
+</html>

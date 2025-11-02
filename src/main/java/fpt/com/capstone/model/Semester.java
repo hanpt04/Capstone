@@ -21,7 +21,7 @@ public class Semester {
     private String name;
     private boolean isCurrent;
     private String semesterCode;
-    private int year;
+    private int academic_year;
     private Date StartDate;
     private Date EndDate;
     private boolean isClosed;

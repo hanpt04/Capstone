@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/semester")
+@CrossOrigin("*")
 public class SemesterController {
     @Autowired
     private SemesterService semesterService;
@@ -21,7 +22,7 @@ public class SemesterController {
     }
 
     @PostMapping
-    public ResponseEntity<Semester> createSemester(Semester semester) {
+    public ResponseEntity<Semester> createSemester(@RequestBody Semester semester) {
         Semester createdSemester = semesterService.save(semester);
         return ResponseEntity.ok(createdSemester);
     }

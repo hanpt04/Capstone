@@ -26,6 +26,11 @@ public class ProposalHistoryController {
         return ResponseEntity.ok(histories);
     }
 
+    @GetMapping("/{id}/history")
+    public List< CapstoneProposalHistory> getProposalHistory  ( @PathVariable int id ) {
+        return proposalHistoryService.getHistoriesByProposalId( id);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<CapstoneProposalHistory> findById(@PathVariable int id) {
         return ResponseEntity.ok(proposalHistoryService.getProposalHistory(id));

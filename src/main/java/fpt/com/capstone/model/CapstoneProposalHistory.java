@@ -8,8 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,22 +32,13 @@ public class CapstoneProposalHistory {
 
     @Column(columnDefinition = "TEXT")
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "semester_id")
-    private Semester semester;
     private String attachmentUrl;
 
-    @Column(columnDefinition = "TEXT")
-    private String nonFunc;
-    @Column(columnDefinition = "TEXT")
-    private String Func;
-
-    private Date rejectDate;
-    private boolean isAdmin1;
-    private boolean isAdmin2 ;
+    @ElementCollection
+    private List<String> nonFunc;
+    @ElementCollection
+    private List<String> func;
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }
 

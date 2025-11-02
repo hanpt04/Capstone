@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/proposal-history")
+@CrossOrigin ("*")
 public class ProposalHistoryController {
     @Autowired
     private ProposalHistoryService proposalHistoryService;

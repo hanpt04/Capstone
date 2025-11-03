@@ -36,7 +36,7 @@ public class CapstoneProposalService {
 
         CapstoneProposal saved;
 
-        if (proposal.getId() != null) {
+        if (proposal.getId() != null ) {
             // UPDATE: Load từ DB
             CapstoneProposal existing = capstoneProposalRepository.findById(proposal.getId()).orElseThrow(() -> new CustomException("Proposal not found", HttpStatus.NOT_FOUND));
             ProposalUtils.copyUpdatableFields(existing, proposal);
@@ -56,8 +56,16 @@ public class CapstoneProposalService {
 
             CapstoneProposalHistory history = historyMapper.toHistory(saved, "Proposal bị trùng lặp với proposal ID: " + checkResult.getClosestId());
             historyRepository.save( history);
-
+            CapstoneProposal existing = capstoneProposalRepository.findById(proposal.getId()).orElseThrow(() -> new CustomException("Proposal not found", HttpStatus.NOT_FOUND));
+            existing.setStatus( CapstoneProposal.ProposalStatus.DUPLICATE_REJECTED);
+            capstoneProposalRepository.save(existing);
             throw new DuplicateProposalException("Proposal bị trùng lặp!", checkResult);
+        }
+        else
+        {
+            CapstoneProposal existing = capstoneProposalRepository.findById(proposal.getId()).orElseThrow(() -> new CustomException("Proposal not found", HttpStatus.NOT_FOUND));
+           existing.setStatus( CapstoneProposal.ProposalStatus.DUPLICATE_ACCEPTED );
+            capstoneProposalRepository.save(existing);
         }
 
 

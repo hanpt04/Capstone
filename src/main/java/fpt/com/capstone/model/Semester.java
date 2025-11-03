@@ -24,5 +24,5 @@ public class Semester {
     private int academic_year;
     private Date StartDate;
     private Date EndDate;
-    private boolean isClosed;
+//    private boolean isClosed;
 }

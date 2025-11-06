@@ -50,24 +50,11 @@ public class CapstoneProposal {
 
     //Admin1
     @Column(nullable = true)
-    private Boolean isAdmin1;
-    @Column(columnDefinition = "TEXT", nullable = true)
-    private String admin1Comments;
-    @Column(nullable = true)
-    private Integer admin1Id;
-    @Column(nullable = true)
-    private LocalDateTime admin1ReviewedAt;
+    private Boolean isAdmin1=false;
 
     //Admin2
     @Column(nullable = true)
-    private Boolean isAdmin2;
-    @Column(nullable = true)
-    private Integer admin2Id;
-    @Column(columnDefinition = "TEXT", nullable = true)
-    private String admin2Comments;
-    @Column(nullable = true)
-    private LocalDateTime admin2ReviewedAt;
-
+    private Boolean isAdmin2=false;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -84,7 +71,7 @@ public class CapstoneProposal {
         ,REVIEW_2 //review lần 2
         ,REVIEW_3 //review lần 3
         ,DEFENSE // ra hội đồng lần 1
-        ,FINAL_DEFENSE //ra hội đồng lần 2
+        ,SECOND_DEFENSE //ra hội đồng lần 2
         ,FAILED //bị đánh rớt
         ,COMPLETED //hoàn thành
     }

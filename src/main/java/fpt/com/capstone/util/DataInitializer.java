@@ -40,6 +40,17 @@
 //        lecturerRepository.save(admin);
 //        log.info("✅ Created Admin: {}", admin.getEmail());
 //
+//        Lecturer admin1 = new Lecturer();
+//        admin1.setEmail("admin1@fpt.edu.vn");
+//        admin1.setPassword(passwordEncoder.encode("admin12345"));
+//        admin1.setFullName("Admin System");
+//        admin1.setPhoneNumber("0123456779");
+//        admin1.setRole(Lecturer.AccountRole.ADMIN);
+//        admin1.setStatus(true);
+//        admin1.setLecturerCode("ADMIN002");
+//        lecturerRepository.save(admin1);
+//        log.info("✅ Created Admin: {}", admin1.getEmail());
+//
 //        // ============= CREATE MENTOR =============
 //        Lecturer mentor = new Lecturer();
 //        mentor.setEmail("mentor@fpt.edu.vn");

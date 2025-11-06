@@ -48,10 +48,27 @@ public class CapstoneProposal {
     @Embedded
     private ProposalStudents students;
 
+    //Admin1
     @Column(nullable = true)
     private Boolean isAdmin1;
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String admin1Comments;
+    @Column(nullable = true)
+    private Integer admin1Id;
+    @Column(nullable = true)
+    private LocalDateTime admin1ReviewedAt;
+
+    //Admin2
     @Column(nullable = true)
     private Boolean isAdmin2;
+    @Column(nullable = true)
+    private Integer admin2Id;
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String admin2Comments;
+    @Column(nullable = true)
+    private LocalDateTime admin2ReviewedAt;
+
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

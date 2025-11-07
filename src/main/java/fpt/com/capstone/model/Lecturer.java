@@ -10,6 +10,7 @@ import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Entity
@@ -49,8 +50,13 @@ public class Lecturer  {
     @Column(nullable = false, unique = true)
     private String lecturerCode;
 
+    @OneToMany(mappedBy = "lecturer", fetch = FetchType.LAZY)
+    private Set<CouncilMember> councilMemberships;
+
+
     public enum AccountRole {
         LECTURER, ADMIN, MENTOR
+
     }
 
 }

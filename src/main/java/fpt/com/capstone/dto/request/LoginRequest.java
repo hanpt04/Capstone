@@ -18,6 +18,6 @@ public class LoginRequest {
     private String email;
 
     @NotBlank(message = "Password không được để trống")
-    @Size(min = 6, message = "Password phải có ít nhất 6 ký tự")
+    @Size(min = 0, message = "Password phải có ít nhất 6 ký tự")
     private String password;
 }

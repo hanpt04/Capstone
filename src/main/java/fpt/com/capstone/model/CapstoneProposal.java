@@ -51,10 +51,12 @@ public class CapstoneProposal {
     //Admin1
     @Column(nullable = true)
     private Boolean isAdmin1=false;
+    private Integer admin1Id;
 
     //Admin2
     @Column(nullable = true)
     private Boolean isAdmin2=false;
+    private Integer admin2Id;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

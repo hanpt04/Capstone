@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -31,5 +32,8 @@ public class Council {
     @JoinColumn(name = "schdule_council_id")
     @ManyToOne
     private ScheduleCouncil scheduleCouncil;
+
+    @OneToMany(mappedBy = "council", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<CouncilMember> councilMembers;
 
 }

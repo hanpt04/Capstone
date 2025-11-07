@@ -29,9 +29,9 @@ public class CapstoneProposalController {
     }
 
     @PutMapping
-    public CapstoneProposal reviewProposal(@RequestParam int proposalId, @RequestParam Boolean isApproved, @RequestParam String reason) {
+    public CapstoneProposal reviewProposal(@RequestParam int proposalId, @RequestParam Boolean isApproved, @RequestParam String reason, @RequestParam int adminId) {
 
-        return capstoneProposalService.reviewProposal( proposalId, isApproved, reason);
+        return capstoneProposalService.reviewProposal( proposalId, isApproved, reason, adminId);
     }
 
 

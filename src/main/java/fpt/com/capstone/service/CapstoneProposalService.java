@@ -80,7 +80,7 @@ public class CapstoneProposalService {
     }
 
     @Transactional
-    public CapstoneProposal reviewProposal(int proposalId, Boolean isApproved, String reason) {
+    public CapstoneProposal reviewProposal(int proposalId, Boolean isApproved, String reason, int adminId) {
 
         if (!isApproved && (reason == null || reason.trim().isEmpty())) {
             throw new CustomException("Reason is required when rejecting", HttpStatus.BAD_REQUEST);
@@ -91,7 +91,9 @@ public class CapstoneProposalService {
         if ( !isApproved)
         {
             proposal.setStatus(CapstoneProposal.ProposalStatus.REJECT_BY_ADMIN);
-            historyRepository.save(historyMapper.toHistory(proposal, " Reject By Admin: " + reason));
+             CapstoneProposalHistory capstoneProposalHistory =   historyMapper.toHistory(proposal, " Reject By Admin: " + adminId + ", Reason: " + reason);
+             capstoneProposalHistory.setAdminRejectId( adminId);
+             historyRepository.save( capstoneProposalHistory);
             return capstoneProposalRepository.save(proposal);
         }
         else
@@ -101,12 +103,13 @@ public class CapstoneProposalService {
                 // Lần approve thứ 2
                 proposal.setIsAdmin2(true);
                 proposal.setStatus(CapstoneProposal.ProposalStatus.REVIEW_1);
-
+                proposal.setAdmin2Id(adminId);
             }
             else
             {
                 // Lần approve đầu tiên
                 proposal.setIsAdmin1(true);
+                proposal.setAdmin1Id( adminId);
             }
         }
 

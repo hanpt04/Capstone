@@ -27,6 +27,8 @@ public class CapstoneProposalHistory {
     @Column(nullable = false)
     private String title;
 
+    private Integer adminRejectId;
+
     @Column(columnDefinition = "TEXT")
     private String context;
 

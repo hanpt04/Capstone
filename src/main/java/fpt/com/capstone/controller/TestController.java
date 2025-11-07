@@ -1,7 +1,9 @@
 package fpt.com.capstone.controller;
 
 import fpt.com.capstone.model.CapstoneProposal;
+import fpt.com.capstone.model.Lecturer;
 import fpt.com.capstone.repository.CapstoneProposalRepository;
+import fpt.com.capstone.repository.LecturerRepository;
 import fpt.com.capstone.service.ChromaDBService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,7 @@ public class TestController {
 
     private final CapstoneProposalRepository proposalRepository;
     private final ChromaDBService chromaDBService;
-
+    private final LecturerRepository lecturerRepository;
     /**
      * Nhận proposal và upload lên ChromaDB luôn
      */
@@ -39,6 +41,14 @@ public class TestController {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
+    }
+
+
+
+
+    @PostMapping
+    public Lecturer createLecturer(Lecturer lecturer) {
+        return lecturerRepository.save(lecturer);
     }
 
 

@@ -17,7 +17,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .servers(List.of(
-                        new Server().url("https://5f9ae45ae19e.ngrok-free.app").description("Production Server"),
+                        new Server().url("https://66b7b94833d1.ngrok-free.app").description("Production Server"),
                         new Server().url("http://localhost:8080").description("Local Dev")
                 ))
                 .components(new Components().addSecuritySchemes("bearerAuth",

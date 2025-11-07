@@ -3,6 +3,7 @@ package fpt.com.capstone.controller;
 
 import fpt.com.capstone.dto.request.CreateCouncilRequest;
 import fpt.com.capstone.dto.request.UpdateCouncilRequest;
+import fpt.com.capstone.dto.response.CouncilResponse;
 import fpt.com.capstone.model.Council;
 import fpt.com.capstone.service.CouncilService;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class CouncilController {
     }
 
     @GetMapping
-    public List<Council> getAllCouncils() {
+    public List<CouncilResponse> getAllCouncils() {
         return councilService.getAllCouncils();
     }
 

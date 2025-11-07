@@ -1,9 +1,8 @@
 package fpt.com.capstone.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,7 +12,8 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Council {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,6 @@ public class Council {
     private int totalMembers;
     private int status; // 1:ACTIVE, 2:INACTIVE, 3:COMPLETED
 
-    @OneToMany(mappedBy = "council", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<CouncilMember> councilMembers;
+
 
 }

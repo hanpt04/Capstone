@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,11 +14,14 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
+    @Value("${app.server.prod-url}")
+    private String prodUrl;
+
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .servers(List.of(
-                        new Server().url("https://66b7b94833d1.ngrok-free.app").description("Production Server"),
+                        new Server().url(prodUrl).description("Production Server"),
                         new Server().url("http://localhost:8080").description("Local Dev")
                 ))
                 .components(new Components().addSecuritySchemes("bearerAuth",

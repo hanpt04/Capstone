@@ -121,7 +121,7 @@ public class CapstoneProposalService {
 
 
     public List<CapstoneProposal> getForAdminAprove(Integer adminId) {
-       List<CapstoneProposal> list = capstoneProposalRepository.findAllByAdmin1IdIsNullAndAdmin2IdIsNullOrAdmin1IdNotOrAdmin2IdNot(adminId, adminId);
+       List<CapstoneProposal> list = capstoneProposalRepository.findAllByAdmin1IdIsNullOrAdmin2IdIsNullOrAdmin1IdNotOrAdmin2IdNot(adminId, adminId);
        List<CapstoneProposal> returnList = new ArrayList<>();
        for( CapstoneProposal p : list)
        {

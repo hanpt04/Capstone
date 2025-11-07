@@ -32,6 +32,9 @@ public class CapstoneProposal {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    private String lecturerCode1 = "LAMNN23";
+    private String lecturerCode2;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProposalStatus status = ProposalStatus.SUBMITTED;
@@ -50,12 +53,12 @@ public class CapstoneProposal {
 
     //Admin1
     @Column(nullable = true)
-    private Boolean isAdmin1=false;
+    private Boolean isAdmin1;
     private Integer admin1Id;
 
     //Admin2
     @Column(nullable = true)
-    private Boolean isAdmin2=false;
+    private Boolean isAdmin2;
     private Integer admin2Id;
 
     @CreationTimestamp

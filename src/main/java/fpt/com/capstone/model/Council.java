@@ -29,9 +29,6 @@ public class Council {
     private Semester semester;
     private int totalMembers;
     private int status; // 1:ACTIVE, 2:INACTIVE, 3:COMPLETED
-    @JoinColumn(name = "schdule_council_id")
-    @ManyToOne
-    private ScheduleCouncil scheduleCouncil;
 
     @OneToMany(mappedBy = "council", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<CouncilMember> councilMembers;

@@ -7,8 +7,12 @@ import fpt.com.capstone.repository.LecturerRepository;
 import fpt.com.capstone.service.ChromaDBService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/test")
@@ -46,9 +50,10 @@ public class TestController {
 
 
 
-    @PostMapping
-    public Lecturer createLecturer(Lecturer lecturer) {
-        return lecturerRepository.save(lecturer);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Lecturer>> createLecturer(@RequestBody List<Lecturer> lecturers) {
+        List<Lecturer> saved = lecturerRepository.saveAll(lecturers);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
 

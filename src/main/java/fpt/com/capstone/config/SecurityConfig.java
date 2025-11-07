@@ -4,6 +4,7 @@ import fpt.com.capstone.security.CustomUserDetailsService;
 import fpt.com.capstone.security.jwt.JwtAuthenticationEntryPoint;
 import fpt.com.capstone.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +33,9 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
+    @Value("${app.server.prod-url}")
+    private String prodUrl;
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
@@ -56,7 +60,7 @@ public class SecurityConfig {
         http
                  .cors(cors -> cors.configurationSource(request -> {
             CorsConfiguration corsConfiguration = new CorsConfiguration();
-            corsConfiguration.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "https://532d9ba462e4.ngrok-free.app", "http://localhost:8081","http://10.3.80.38:8081","http://localhost:8080","https://bambi.kdz.asia"));
+            corsConfiguration.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", prodUrl, "http://localhost:8081","http://10.3.80.38:8081","http://localhost:8080","https://bambi.kdz.asia"));
             corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
             corsConfiguration.setAllowCredentials(true);

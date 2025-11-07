@@ -1,5 +1,6 @@
 package fpt.com.capstone.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,6 +61,13 @@ public class CapstoneProposal {
     @Column(nullable = true)
     private Boolean isAdmin2;
     private Integer admin2Id;
+
+    @Nullable
+    private LocalDateTime review1At;
+    @Nullable
+    private LocalDateTime review2At;
+    @Nullable
+    private LocalDateTime review3At;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

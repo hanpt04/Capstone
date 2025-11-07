@@ -1,10 +1,8 @@
 package fpt.com.capstone.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -50,12 +48,11 @@ public class Lecturer  {
     @Column(nullable = false, unique = true)
     private String lecturerCode;
 
-    @OneToMany(mappedBy = "lecturer", fetch = FetchType.LAZY)
-    private Set<CouncilMember> councilMemberships;
+
 
 
     public enum AccountRole {
-        LECTURER, ADMIN, MENTOR
+         ADMIN, MENTOR
 
     }
 

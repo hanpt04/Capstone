@@ -40,4 +40,8 @@ public class CapstoneProposalController {
     public ResponseEntity<CapstoneProposal> findById( @PathVariable int id) {
         return ResponseEntity.ok(capstoneProposalService.findById(id));
     }
+
+    @GetMapping("/by-admin/{adminId}")
+    public ResponseEntity<List<CapstoneProposal>> findByAdminId( @PathVariable Integer adminId) {
+        return ResponseEntity.ok(capstoneProposalService.getForAdminAprove(adminId));}
 }

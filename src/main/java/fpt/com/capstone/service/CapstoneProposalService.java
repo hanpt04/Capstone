@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,7 +25,6 @@ public class CapstoneProposalService {
     private final ChromaDBService chromaDBService;
     private final CapstoneProposalHistoryMapper historyMapper;
     private final CapstoneProposalHistoryRepository historyRepository;
-
 
     public List<CapstoneProposal> getAll() {
         return capstoneProposalRepository.findAll();
@@ -98,8 +98,7 @@ public class CapstoneProposalService {
         }
         else
         {
-            if (proposal.getIsAdmin1()!=null)
-            {
+            if (proposal.getIsAdmin1()!=null) {
                 // Lần approve thứ 2
                 proposal.setIsAdmin2(true);
                 proposal.setStatus(CapstoneProposal.ProposalStatus.REVIEW_1);
@@ -118,6 +117,19 @@ public class CapstoneProposalService {
 
     public CapstoneProposal findById(int id) {
         return capstoneProposalRepository.findById(id).orElse(null);
+    }
+
+
+    public List<CapstoneProposal> getForAdminAprove(Integer adminId) {
+       List<CapstoneProposal> list = capstoneProposalRepository.findAllByAdmin1IdIsNullAndAdmin2IdIsNullOrAdmin1IdNotOrAdmin2IdNot(adminId, adminId);
+       List<CapstoneProposal> returnList = new ArrayList<>();
+       for( CapstoneProposal p : list)
+       {
+           if(p.getStatus() == CapstoneProposal.ProposalStatus.SUBMITTED || p.getStatus() == CapstoneProposal.ProposalStatus.DUPLICATE_ACCEPTED ){
+                returnList.add( p );
+           }
+       }
+         return returnList;
     }
 
 }

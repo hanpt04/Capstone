@@ -14,4 +14,7 @@ public interface CapstoneProposalRepository extends JpaRepository<CapstonePropos
     Page<CapstoneProposal> findByStatus(CapstoneProposal.ProposalStatus status, Pageable pageable);
 
     Page<CapstoneProposal> findByStatusIn(List<CapstoneProposal.ProposalStatus> statuses, Pageable pageable);
+
+    List<CapstoneProposal> findAllByAdmin1IdIsNullAndAdmin2IdIsNullOrAdmin1IdNotOrAdmin2IdNot(Integer admin1Id, Integer admin2Id);
+
 }

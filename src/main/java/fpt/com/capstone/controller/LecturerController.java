@@ -2,7 +2,6 @@ package fpt.com.capstone.controller;
 
 
 import fpt.com.capstone.model.Lecturer;
-import fpt.com.capstone.repository.LecturerRepository;
 import fpt.com.capstone.service.LectuterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

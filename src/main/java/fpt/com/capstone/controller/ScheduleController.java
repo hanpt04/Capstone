@@ -3,7 +3,6 @@ package fpt.com.capstone.controller;
 
 import fpt.com.capstone.dto.request.CreateScheduleRequest;
 import fpt.com.capstone.model.Schedule;
-import fpt.com.capstone.repository.ScheduleRepository;
 import fpt.com.capstone.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

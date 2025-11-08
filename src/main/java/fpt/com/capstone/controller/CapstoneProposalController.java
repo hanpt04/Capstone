@@ -2,12 +2,10 @@ package fpt.com.capstone.controller;
 
 import fpt.com.capstone.model.CapstoneProposal;
 import fpt.com.capstone.service.CapstoneProposalService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.Role;
 import java.time.LocalDateTime;
 import java.util.List;
 

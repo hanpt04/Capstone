@@ -5,6 +5,8 @@ import fpt.com.capstone.model.CapstoneProposal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,7 +19,14 @@ public interface CapstoneProposalRepository extends JpaRepository<CapstonePropos
 
     List<CapstoneProposal> findAllByAdmin1IdIsNullOrAdmin2IdIsNullAndAdmin1IdNotOrAdmin2IdNot(Integer admin1Id, Integer admin2Id);
 
-    List<CapstoneProposal> findByLecturerReview1CodeOrLecturerReview2CodeOrLecturerReview3Code(String code1, String code2, String code3);
+    @Query("SELECT p FROM CapstoneProposal p WHERE " +
+            "p.reviewer.reviewer1Code = :code OR " +
+            "p.reviewer.reviewer2Code = :code OR " +
+            "p.reviewer.reviewer3Code = :code OR " +
+            "p.reviewer.reviewer4Code = :code OR " +
+            "p.reviewer.reviewer5Code = :code OR " +
+            "p.reviewer.reviewer6Code = :code")
+    List<CapstoneProposal> findByAnyReviewerCode(@Param("code") String code);
 
     List<CapstoneProposal> findByStatusIn(List<CapstoneProposal.ProposalStatus> statuses);
 }

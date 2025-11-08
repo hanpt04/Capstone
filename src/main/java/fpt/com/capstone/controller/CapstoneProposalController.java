@@ -38,8 +38,8 @@ public class CapstoneProposalController {
     }
 
     @PutMapping("/update-review")
-    public CapstoneProposal updateReview(@RequestParam int proposalId,  @RequestParam LocalDateTime date ,@RequestParam int reviewTime, @RequestParam String mentorCode) {
-        return capstoneProposalService.updateReview(proposalId, date, reviewTime,mentorCode);
+    public CapstoneProposal updateReview(@RequestParam int proposalId,  @RequestParam LocalDateTime date ,@RequestParam int reviewTime, @RequestParam String mentorCode1, @RequestParam String mentorCode2, @RequestParam String mentorName1, @RequestParam String mentorName2) {
+        return capstoneProposalService.updateReview(proposalId, date, reviewTime, mentorCode1, mentorCode2, mentorName1, mentorName2);
     }
 
 

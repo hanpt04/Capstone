@@ -62,16 +62,16 @@ public class CapstoneProposal {
     private Boolean isAdmin2;
     private Integer admin2Id;
 
+    @Embedded
+    Reviewer reviewer;
+
     @Nullable
     private LocalDateTime review1At;
-    private String lecturerReview1Code;
+
     @Nullable
     private LocalDateTime review2At;
-    private String lecturerReview2Code;
     @Nullable
     private LocalDateTime review3At;
-    private String lecturerReview3Code;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -115,6 +115,33 @@ public class CapstoneProposal {
 
         private String student6Id;
         private String student6Name;
+    }
+
+    @Embeddable
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Reviewer {
+
+        private String reviewer1Code;
+        private String reviewer1Name;
+
+        private String reviewer2Code;
+        private String reviewer2Name;
+
+        private String reviewer3Code;
+        private String reviewer3Name;
+
+        private String reviewer4Code;
+        private String reviewer4Name;
+
+        private String reviewer5Code;
+        private String reviewer5Name;
+
+        private String reviewer6Code;
+        private String reviewer6Name;
+
+
     }
 }
 

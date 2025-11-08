@@ -32,25 +32,44 @@ public class CapstoneProposalService {
     }
 
     public List<CapstoneProposal> getProposalsByReviewer(String lecturerCode) {
-        return capstoneProposalRepository.findByLecturerReview1CodeOrLecturerReview2CodeOrLecturerReview3Code(lecturerCode, lecturerCode, lecturerCode);
+        return capstoneProposalRepository.findByAnyReviewerCode(lecturerCode);
     }
 
 
-    public CapstoneProposal updateReview (int id, LocalDateTime date, int reviewTime, String mentorCode) {
+
+
+    public CapstoneProposal updateReview (int id, LocalDateTime date, int reviewTime, String  mentorCode1, String mentorCode2, String mentorName1, String mentorName2) {
         CapstoneProposal proposal = capstoneProposalRepository.findById(id).orElseThrow(() -> new CustomException("Proposal not found", HttpStatus.NOT_FOUND));
+
+
+        CapstoneProposal.Reviewer existedReviewer =proposal.getReviewer();
+
         switch ( reviewTime)
+
         {
             case 1:
                 proposal.setReview1At( date);
-                proposal.setLecturerReview1Code( mentorCode);
+                existedReviewer.setReviewer1Code( mentorCode1);
+                existedReviewer.setReviewer1Name( mentorName1);
+                existedReviewer.setReviewer2Code( mentorCode2);
+                existedReviewer.setReviewer2Name( mentorName2);
+                proposal.setReviewer( existedReviewer);
                 break;
             case 2:
                 proposal.setReview2At( date);
-                proposal.setLecturerReview2Code( mentorCode);
+                existedReviewer.setReviewer3Code( mentorCode1);
+                existedReviewer.setReviewer3Name( mentorName1);
+                existedReviewer.setReviewer4Code( mentorCode2);
+                existedReviewer.setReviewer4Name( mentorName2);
+                proposal.setReviewer( existedReviewer);
                 break;
             case 3:
                 proposal.setReview3At( date);
-                proposal.setLecturerReview3Code( mentorCode);
+                existedReviewer.setReviewer5Code( mentorCode1);
+                existedReviewer.setReviewer5Name( mentorName1);
+                existedReviewer.setReviewer6Code( mentorCode2);
+                existedReviewer.setReviewer6Name( mentorName2);
+                proposal.setReviewer( existedReviewer);
                 break;
             default:
                 throw new CustomException("Invalid review time", HttpStatus.BAD_REQUEST);

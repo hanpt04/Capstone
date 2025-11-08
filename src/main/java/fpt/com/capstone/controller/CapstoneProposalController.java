@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.Role;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,8 @@ public class CapstoneProposalController {
 
     @PostMapping
     public CapstoneProposal createProposal(@RequestBody CapstoneProposal proposal) {
+        proposal.setIsAdmin1(null);
+        proposal.setIsAdmin2(null);
         return capstoneProposalService.save(proposal);
     }
 
@@ -34,6 +37,16 @@ public class CapstoneProposalController {
         return capstoneProposalService.reviewProposal( proposalId, isApproved, reason, adminId);
     }
 
+    @PutMapping("/update-review")
+    public CapstoneProposal updateReview(@RequestParam int proposalId,  @RequestParam LocalDateTime date ,@RequestParam int reviewTime, @RequestParam String mentorCode) {
+        return capstoneProposalService.updateReview(proposalId, date, reviewTime,mentorCode);
+    }
+
+
+    @GetMapping("/by-reviewer/{lecturerCode}")
+    public List<CapstoneProposal> getProposalsByReviewer(@PathVariable String lecturerCode) {
+        return capstoneProposalService.getProposalsByReviewer(lecturerCode);
+    }
 
 
     @GetMapping("{id}")

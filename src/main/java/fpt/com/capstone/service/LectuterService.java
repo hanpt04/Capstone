@@ -18,4 +18,8 @@ public class LectuterService {
     public List<Lecturer> getAllLecturers() {
         return lecturerRepository.findAll();
     }
+
+    public Lecturer getLecturerById(int id) {
+        return lecturerRepository.findById(id).orElse(null);
+    }
 }

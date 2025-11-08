@@ -17,4 +17,7 @@ public interface CapstoneProposalRepository extends JpaRepository<CapstonePropos
 
     List<CapstoneProposal> findAllByAdmin1IdIsNullOrAdmin2IdIsNullAndAdmin1IdNotOrAdmin2IdNot(Integer admin1Id, Integer admin2Id);
 
+    List<CapstoneProposal> findByLecturerReview1CodeOrLecturerReview2CodeOrLecturerReview3Code(String code1, String code2, String code3);
+
+    List<CapstoneProposal> findByStatusIn(List<CapstoneProposal.ProposalStatus> statuses);
 }

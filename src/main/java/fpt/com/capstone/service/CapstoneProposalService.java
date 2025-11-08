@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,33 @@ public class CapstoneProposalService {
 
     public List<CapstoneProposal> getAll() {
         return capstoneProposalRepository.findAll();
+    }
+
+    public List<CapstoneProposal> getProposalsByReviewer(String lecturerCode) {
+        return capstoneProposalRepository.findByLecturerReview1CodeOrLecturerReview2CodeOrLecturerReview3Code(lecturerCode, lecturerCode, lecturerCode);
+    }
+
+
+    public CapstoneProposal updateReview (int id, LocalDateTime date, int reviewTime, String mentorCode) {
+        CapstoneProposal proposal = capstoneProposalRepository.findById(id).orElseThrow(() -> new CustomException("Proposal not found", HttpStatus.NOT_FOUND));
+        switch ( reviewTime)
+        {
+            case 1:
+                proposal.setReview1At( date);
+                proposal.setLecturerReview1Code( mentorCode);
+                break;
+            case 2:
+                proposal.setReview2At( date);
+                proposal.setLecturerReview2Code( mentorCode);
+                break;
+            case 3:
+                proposal.setReview3At( date);
+                proposal.setLecturerReview3Code( mentorCode);
+                break;
+            default:
+                throw new CustomException("Invalid review time", HttpStatus.BAD_REQUEST);
+        }
+        return capstoneProposalRepository.save(proposal);
     }
 
     public CapstoneProposal save(CapstoneProposal proposal) {
@@ -65,6 +93,8 @@ public class CapstoneProposalService {
         {
             CapstoneProposal existing = capstoneProposalRepository.findById(proposal.getId()).orElseThrow(() -> new CustomException("Proposal not found", HttpStatus.NOT_FOUND));
            existing.setStatus( CapstoneProposal.ProposalStatus.DUPLICATE_ACCEPTED );
+           existing.setIsAdmin1(null);
+           existing.setIsAdmin2(null);
             capstoneProposalRepository.save(existing);
         }
 

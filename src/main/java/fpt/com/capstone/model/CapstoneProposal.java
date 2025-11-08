@@ -64,10 +64,13 @@ public class CapstoneProposal {
 
     @Nullable
     private LocalDateTime review1At;
+    private String lecturerReview1Code;
     @Nullable
     private LocalDateTime review2At;
+    private String lecturerReview2Code;
     @Nullable
     private LocalDateTime review3At;
+    private String lecturerReview3Code;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

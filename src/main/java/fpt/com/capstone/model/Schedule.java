@@ -42,6 +42,8 @@ public class Schedule   {
     @Enumerated(EnumType.STRING)
     private ScheduleStatus status;
 
+    private Integer defenseRound ; // Vòng bảo vệ (1, 2, ...)
+
     public enum ScheduleStatus {
         SCHEDULED, // Đã lên lịch, chờ diễn ra
         COMPLETED, // Đã diễn ra xong

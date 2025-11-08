@@ -9,5 +9,5 @@ public interface ProposalHistoryService {
     List<CapstoneProposalHistory> getAllProposalHistory();
     CapstoneProposalHistory save(CapstoneProposalHistory proposalHistory);
     CapstoneProposalHistory update(CapstoneProposalHistory proposalHistory);
-    List< CapstoneProposalHistory> getHistoriesByProposalId(int proposalId)
+    List< CapstoneProposalHistory> getHistoriesByProposalId(int proposalId);
 }

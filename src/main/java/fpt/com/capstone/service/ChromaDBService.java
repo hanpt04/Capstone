@@ -2,6 +2,7 @@ package fpt.com.capstone.service;
 
 import fpt.com.capstone.model.CapstoneProposal;
 import fpt.com.capstone.model.DTO.DuplicateCheckResult;
+import fpt.com.capstone.repository.RatioRepository;
 import fpt.com.capstone.util.ProposalUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +19,17 @@ import java.util.*;
 public class ChromaDBService {
 
     private final RestTemplate restTemplate;
+    private final RatioRepository ratioRepository;
 
-    // Ngưỡng khoảng cách để coi là trùng lặp 0.5 là sấp xỉ 87.5%
-    private static final double DUPLICATE_THRESHOLD = 0.5;
+    // Ngưỡng khoảng cách để coi là trùng lặp 0.5 là sấp xỉ 75%
+
 
     @Value("${chromadb.proxy.url:http://localhost:5000}")
     private String chromaProxyUrl;
 
     @Value("${chromadb.collection.name:capstone_proposals}")
     private String collectionName;
+
 
     public boolean uploadProposal(CapstoneProposal proposal) {
         try {
@@ -43,6 +46,9 @@ public class ChromaDBService {
 
 
     public DuplicateCheckResult checkDuplicate(CapstoneProposal proposal) {
+
+          double DUPLICATE_THRESHOLD  = ratioRepository.findById(1).get().getRatio();
+
         String url = chromaProxyUrl + "/collections/" + collectionName + "/query";
         String queryText = ProposalUtils.buildCombinedDocument(proposal);
 

@@ -52,15 +52,11 @@ public class CapstoneProposal {
     @Embedded
     private ProposalStudents students;
 
-    //Admin1
-    @Column(nullable = true)
-    private Boolean isAdmin1;
-    private Integer admin1Id;
+    Boolean isReviewerApprove1;
+    Boolean isReviewerApprove2;
+    Boolean isReviewerApprove3;
+    Boolean isReviewerApprove4;
 
-    //Admin2
-    @Column(nullable = true)
-    private Boolean isAdmin2;
-    private Integer admin2Id;
 
     @Embedded
     Reviewer reviewer;

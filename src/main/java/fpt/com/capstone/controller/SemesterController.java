@@ -30,4 +30,10 @@ public class SemesterController {
     public ResponseEntity<Semester> findById(@PathVariable int id) {
         return ResponseEntity.ok(semesterService.findById(id));}
 
+    @PutMapping
+    public ResponseEntity<Semester> updateSemester(@RequestBody Semester semester) {
+        Semester updatedSemester = semesterService.save(semester);
+        return ResponseEntity.ok(updatedSemester);
+    }
+
 }

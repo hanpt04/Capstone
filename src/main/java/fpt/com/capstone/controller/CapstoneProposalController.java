@@ -1,6 +1,8 @@
 package fpt.com.capstone.controller;
 
 import fpt.com.capstone.model.CapstoneProposal;
+import fpt.com.capstone.model.Ratio;
+import fpt.com.capstone.repository.RatioRepository;
 import fpt.com.capstone.service.CapstoneProposalService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import java.util.List;
 public class CapstoneProposalController {
     @Autowired
     private CapstoneProposalService capstoneProposalService;
+    @Autowired
+    RatioRepository ratioRepository;
 
     @GetMapping
     public ResponseEntity<List<CapstoneProposal>> findAll() {
@@ -26,15 +30,13 @@ public class CapstoneProposalController {
 
     @PostMapping
     public CapstoneProposal createProposal(@RequestBody CapstoneProposal proposal) {
-        proposal.setIsAdmin1(null);
-        proposal.setIsAdmin2(null);
         return capstoneProposalService.save(proposal);
     }
 
     @PutMapping
-    public CapstoneProposal reviewProposal(@RequestParam int proposalId, @RequestParam Boolean isApproved, @RequestParam String reason, @RequestParam int adminId) {
+    public CapstoneProposal reviewProposal(@RequestParam int proposalId, @RequestParam Boolean isApproved, @RequestParam String reason, @RequestParam String reviewerCode) {
 
-        return capstoneProposalService.reviewProposal( proposalId, isApproved, reason, adminId);
+        return capstoneProposalService.reviewProposal( proposalId, isApproved, reason, reviewerCode);
     }
 
     @PutMapping("/update-review")
@@ -48,13 +50,24 @@ public class CapstoneProposalController {
         return capstoneProposalService.getProposalsByReviewer(lecturerCode);
     }
 
+    @PutMapping("/rate")
+    public Ratio updateRatio (@RequestBody Ratio ratio) {
+        return ratioRepository.save(ratio);
+    }
+
+    @GetMapping("/rate")
+    public Ratio getRatio () {
+        return ratioRepository.findById(1).orElse(null);
+    }
+
+
 
     @GetMapping("{id}")
     public ResponseEntity<CapstoneProposal> findById( @PathVariable int id) {
         return ResponseEntity.ok(capstoneProposalService.findById(id));
     }
 
-    @GetMapping("/by-admin/{adminId}")
-    public ResponseEntity<List<CapstoneProposal>> findByAdminId( @PathVariable Integer adminId) {
-        return ResponseEntity.ok(capstoneProposalService.getForAdminAprove(adminId));}
+//    @GetMapping("/by-admin/{adminId}")
+//    public ResponseEntity<List<CapstoneProposal>> findByAdminId( @PathVariable Integer adminId) {
+//        return ResponseEntity.ok(capstoneProposalService.getForAdminAprove(adminId));}
 }

@@ -1,8 +1,10 @@
 package fpt.com.capstone;
 
 import fpt.com.capstone.model.Lecturer;
+import fpt.com.capstone.model.Ratio;
 import fpt.com.capstone.model.Semester;
 import fpt.com.capstone.repository.LecturerRepository;
+import fpt.com.capstone.repository.RatioRepository;
 import fpt.com.capstone.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +21,8 @@ public class CapstoneApplication implements CommandLineRunner {
     SemesterRepository semesterRepository;
     @Autowired
     LecturerRepository lecturerRepository;
+    @Autowired
+    RatioRepository ratioRepository;
 
 
     public static void main(String[] args) {
@@ -27,10 +31,11 @@ public class CapstoneApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        ratioRepository.save( new Ratio(1, 0.5) );
 //        System.out.println( "Application started successfully!" );
 //        semesterRepository.save( new Semester(0, "Spring 2024", true, "SP24", 2024, java.sql.Date.valueOf("2024-01-01"), java.sql.Date.valueOf("2024-05-31")) );
 //// Giảng viên hướng dẫn (MENTOR)
-//        lecturerRepository.save( new Lecturer( 0, "pass123","mentor.a@gmail.com","Trần Văn An","0912345678", Lecturer.AccountRole.ADMIN,true,null,null,"admin1" )) ;
+        lecturerRepository.save( new Lecturer( 0, "pass123","mentor.a@gmail.com","Trần Văn An","0912345678", Lecturer.AccountRole.ADMIN,true,null,null,"admin1" )) ;
 //        lecturerRepository.save( new Lecturer( 0, "pass456","mentor.b@gmail.com","Nguyễn Thị Bình","0912345679", Lecturer.AccountRole.MENTOR,true,null,null,"MENTOR002" )) ;
 //        lecturerRepository.save( new Lecturer( 0, "pass222","mento222r.b@gmail.com","Nguyễn Thị A","0912345679", Lecturer.AccountRole.MENTOR,true,null,null,"MENTOR003" )) ;
 //

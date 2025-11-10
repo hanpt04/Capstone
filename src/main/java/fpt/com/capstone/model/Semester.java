@@ -24,5 +24,9 @@ public class Semester {
     private int academic_year;
     private Date StartDate;
     private Date EndDate;
+    String reviewerCode1;
+    String reviewerCode2;
+    String reviewerCode3;
+    String reviewerCode4;
 //    private boolean isClosed;
 }

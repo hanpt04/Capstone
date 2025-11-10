@@ -17,7 +17,7 @@ public interface CapstoneProposalRepository extends JpaRepository<CapstonePropos
 
     Page<CapstoneProposal> findByStatusIn(List<CapstoneProposal.ProposalStatus> statuses, Pageable pageable);
 
-    List<CapstoneProposal> findAllByAdmin1IdIsNullOrAdmin2IdIsNullAndAdmin1IdNotOrAdmin2IdNot(Integer admin1Id, Integer admin2Id);
+//    List<CapstoneProposal> findAllByAdmin1IdIsNullOrAdmin2IdIsNullAndAdmin1IdNotOrAdmin2IdNot(Integer admin1Id, Integer admin2Id);
 
     @Query("SELECT p FROM CapstoneProposal p WHERE " +
             "p.reviewer.reviewer1Code = :code OR " +

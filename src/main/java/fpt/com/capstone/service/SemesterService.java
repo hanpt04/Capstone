@@ -21,4 +21,6 @@ public class SemesterService {
     }
     public Semester findById(int id) {
         return semesterRepository.findById(id).orElse(null);    }
+
+
 }

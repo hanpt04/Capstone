@@ -30,7 +30,7 @@ public class CapstoneApplication implements CommandLineRunner {
 //        System.out.println( "Application started successfully!" );
 //        semesterRepository.save( new Semester(0, "Spring 2024", true, "SP24", 2024, java.sql.Date.valueOf("2024-01-01"), java.sql.Date.valueOf("2024-05-31")) );
 //// Giảng viên hướng dẫn (MENTOR)
-//        lecturerRepository.save( new Lecturer( 0, "pass123","mentor.a@gmail.com","Trần Văn An","0912345678", Lecturer.AccountRole.ADMIN,true,null,null,"admin1" )) ;
+        lecturerRepository.save( new Lecturer( 0, "pass123","mentor.a@gmail.com","Trần Văn An","0912345678", Lecturer.AccountRole.ADMIN,true,null,null,"admin1" )) ;
 //        lecturerRepository.save( new Lecturer( 0, "pass456","mentor.b@gmail.com","Nguyễn Thị Bình","0912345679", Lecturer.AccountRole.MENTOR,true,null,null,"MENTOR002" )) ;
 //        lecturerRepository.save( new Lecturer( 0, "pass222","mento222r.b@gmail.com","Nguyễn Thị A","0912345679", Lecturer.AccountRole.MENTOR,true,null,null,"MENTOR003" )) ;
 //

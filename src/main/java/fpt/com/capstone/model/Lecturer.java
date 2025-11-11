@@ -53,7 +53,6 @@ public class Lecturer  {
 
     public enum AccountRole {
          ADMIN, MENTOR
-
     }
 
 }

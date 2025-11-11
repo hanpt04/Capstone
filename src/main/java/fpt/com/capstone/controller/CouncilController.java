@@ -8,6 +8,7 @@ import fpt.com.capstone.model.Council;
 import fpt.com.capstone.service.CouncilService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,22 +22,26 @@ public class CouncilController {
 
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public Council createCouncil(@Valid @RequestBody CreateCouncilRequest request) {
 
         return councilService.createCouncil(request);
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','MENTOR')")
     public List<CouncilResponse> getAllCouncils() {
         return councilService.getAllCouncils();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','MENTOR')")
     public Council getCouncilById(@PathVariable Integer id) {
         return councilService.getCouncilById(id);
     }
 
     @PutMapping("/{councilId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public Council updateCouncil(@PathVariable int councilId, @Valid @RequestBody UpdateCouncilRequest request) {
         return councilService.updateCouncil(councilId, request);
 

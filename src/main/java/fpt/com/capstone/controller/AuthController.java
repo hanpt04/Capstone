@@ -10,6 +10,7 @@ import fpt.com.capstone.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,7 @@ public class AuthController {
      * Đăng xuất
      */
     @PostMapping("/logout")
+    @PreAuthorize("hasAnyRole('ADMIN','MENTOR')")
     public ResponseEntity<MessageResponse> logout() {
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok(new MessageResponse("Đăng xuất thành công"));
@@ -58,6 +60,7 @@ public class AuthController {
      * Lấy thông tin profile người dùng hiện tại
      */
     @GetMapping("/profile")
+    @PreAuthorize("hasAnyRole('ADMIN','MENTOR')")
     public ResponseEntity<UserProfileResponse> getCurrentUserProfile() {
         UserProfileResponse response = authService.getCurrentUserProfile();
         return ResponseEntity.ok(response);
@@ -68,6 +71,7 @@ public class AuthController {
      * Đổi mật khẩu
      */
     @PutMapping("/change-password")
+    @PreAuthorize("hasAnyRole('ADMIN','MENTOR')")
     public ResponseEntity<MessageResponse> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
         MessageResponse response = authService.changePassword(request);
         return ResponseEntity.ok(response);

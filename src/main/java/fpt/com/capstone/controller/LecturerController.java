@@ -26,4 +26,10 @@ public class LecturerController {
         return lectuterService.getLecturerById(id);
     }
 
+    @GetMapping("by-code/{code}")
+    public Lecturer getLecturerByCode(@PathVariable String code) {
+        return lectuterService.findByCode(code);
+    }
+
+
 }

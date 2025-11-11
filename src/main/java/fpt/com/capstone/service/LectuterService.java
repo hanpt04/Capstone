@@ -22,4 +22,8 @@ public class LectuterService {
     public Lecturer getLecturerById(int id) {
         return lecturerRepository.findById(id).orElse(null);
     }
+
+    public Lecturer findByCode(String code) {
+        return lecturerRepository.findByLecturerCode(code);
+    }
 }

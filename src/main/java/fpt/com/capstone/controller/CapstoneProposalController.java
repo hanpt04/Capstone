@@ -31,6 +31,8 @@ public class CapstoneProposalController {
 
     @PostMapping
     public CapstoneProposal createProposal(@RequestBody CapstoneProposal proposal) {
+        proposal.setCode( capstoneProposalService.createCapstoneCode(proposal) );
+
         return capstoneProposalService.save(proposal);
     }
 

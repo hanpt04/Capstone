@@ -9,6 +9,7 @@ import fpt.com.capstone.model.DTO.DuplicateCheckResult;
 import fpt.com.capstone.model.Semester;
 import fpt.com.capstone.repository.CapstoneProposalHistoryRepository;
 import fpt.com.capstone.repository.CapstoneProposalRepository;
+import fpt.com.capstone.repository.SemesterRepository;
 import fpt.com.capstone.util.ProposalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ public class CapstoneProposalService {
     private final ChromaDBService chromaDBService;
     private final CapstoneProposalHistoryMapper historyMapper;
     private final CapstoneProposalHistoryRepository historyRepository;
+    private final SemesterRepository semesterRepository;
 
     public List<CapstoneProposal> getAll() {
         return capstoneProposalRepository.findAll();
@@ -39,6 +41,13 @@ public class CapstoneProposalService {
     public DuplicateCheckResult checkDuplicate( int proposalId) {
         CapstoneProposal proposal = capstoneProposalRepository.findById(proposalId).orElseThrow(() -> new CustomException("Proposal not found", HttpStatus.NOT_FOUND));
         return chromaDBService.checkDuplicate(proposal);
+    }
+
+    public String createCapstoneCode ( CapstoneProposal proposal) {
+        Semester semester = semesterRepository.findById( proposal.getSemester().getId()).orElseThrow(() -> new CustomException("Semester not found", HttpStatus.NOT_FOUND));
+        long count = capstoneProposalRepository.count();
+        String capstoneCode ="SE-" + semester.getSemesterCode() + "-P" + String.format("%03d", count+1);
+        return capstoneCode;
     }
 
 

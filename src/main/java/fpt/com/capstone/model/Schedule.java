@@ -23,7 +23,7 @@ public class Schedule   {
     @JoinColumn(name = "capstone_proposal_id")
     private  CapstoneProposal capstoneProposal;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "council_id", nullable = false)
     private Council council;
 

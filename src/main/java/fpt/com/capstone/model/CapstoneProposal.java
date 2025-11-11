@@ -23,6 +23,8 @@ public class CapstoneProposal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String code;
+
     @Nationalized
     @Column(nullable = false)
     private String title;
@@ -96,21 +98,27 @@ public class CapstoneProposal {
 
         private String student1Id;
         private String student1Name;
+        private String student1Phone;
 
         private String student2Id;
         private String student2Name;
+        private String student2Phone;
 
         private String student3Id;
         private String student3Name;
+        private String student3Phone;
 
         private String student4Id;
         private String student4Name;
+        private String student4Phone;
 
         private String student5Id;
         private String student5Name;
+        private String student5Phone;
 
         private String student6Id;
         private String student6Name;
+        private String student6Phone;
     }
 
     @Embeddable

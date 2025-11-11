@@ -9,6 +9,7 @@ import fpt.com.capstone.model.DTO.DuplicateCheckResult;
 import fpt.com.capstone.model.Semester;
 import fpt.com.capstone.repository.CapstoneProposalHistoryRepository;
 import fpt.com.capstone.repository.CapstoneProposalRepository;
+import fpt.com.capstone.repository.SemesterRepository;
 import fpt.com.capstone.util.ProposalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ public class CapstoneProposalService {
     private final ChromaDBService chromaDBService;
     private final CapstoneProposalHistoryMapper historyMapper;
     private final CapstoneProposalHistoryRepository historyRepository;
+    private final SemesterRepository semesterRepository;
 
     public List<CapstoneProposal> getAll() {
         return capstoneProposalRepository.findAll();
@@ -34,6 +36,18 @@ public class CapstoneProposalService {
 
     public List<CapstoneProposal> getProposalsByReviewer(String lecturerCode) {
         return capstoneProposalRepository.findByAnyReviewerCode(lecturerCode);
+    }
+
+    public DuplicateCheckResult checkDuplicate( int proposalId) {
+        CapstoneProposal proposal = capstoneProposalRepository.findById(proposalId).orElseThrow(() -> new CustomException("Proposal not found", HttpStatus.NOT_FOUND));
+        return chromaDBService.checkDuplicate(proposal);
+    }
+
+    public String createCapstoneCode ( CapstoneProposal proposal) {
+        Semester semester = semesterRepository.findById( proposal.getSemester().getId()).orElseThrow(() -> new CustomException("Semester not found", HttpStatus.NOT_FOUND));
+        long count = capstoneProposalRepository.count();
+        String capstoneCode ="SE-" + semester.getSemesterCode() + "-P" + String.format("%03d", count+1);
+        return capstoneCode;
     }
 
 
@@ -210,33 +224,87 @@ public class CapstoneProposalService {
         if (hasReviewerAlreadyReviewed(proposal, reviewerCode)) {
             throw new CustomException("Reviewer has already reviewed this proposal", HttpStatus.BAD_REQUEST);
         }
-
-        // Handle rejection case - pending business logic from QA
-        if (!isApproved) {
-            // TODO: Implement reject logic when QA provides business requirements
-            throw new CustomException("Rejection flow is pending QA clarification", HttpStatus.NOT_IMPLEMENTED);
+        if ( reviewerIndex( proposalId, reviewerCode) == -1 ) {
+            throw new CustomException("Reviewer is not assigned to this semester", HttpStatus.FORBIDDEN);
         }
 
-        // Handle approval
-        recordReviewerApproval(proposal, reviewerCode);
 
-        // Check how many approvals we have now
-        int approvalCount = countApprovals(proposal);
+        if ( isApproved)
+        {
+            switch ( reviewerIndex( proposalId, reviewerCode))
 
-        // If we have 2 approvals, change status to REVIEW_1
-        if (approvalCount == 2) {
+            {
+                case 1:
+                    proposal.setIsReviewerApprove1(true);
+                    break;
+                case 2:
+                    proposal.setIsReviewerApprove2(true);
+                    break;
+                case 3:
+                    proposal.setIsReviewerApprove3(true);
+                    break;
+                case 4:
+                    proposal.setIsReviewerApprove4(true);
+                    break;
+                default:
+                    throw new CustomException("Invalid reviewer index", HttpStatus.BAD_REQUEST);
+            }
+        }
+        else if ( !isApproved)
+        {
+            proposal.setStatus( CapstoneProposal.ProposalStatus.REJECT_BY_ADMIN);
+            switch ( reviewerIndex( proposalId, reviewerCode))
+
+            {
+                case 1:
+                    proposal.setIsReviewerApprove1(false);
+                    break;
+                case 2:
+                    proposal.setIsReviewerApprove2(false);
+                    break;
+                case 3:
+                    proposal.setIsReviewerApprove3(false);
+                    break;
+                case 4:
+                    proposal.setIsReviewerApprove4(false);
+                    break;
+                default:
+                    throw new CustomException("Invalid reviewer index", HttpStatus.BAD_REQUEST);
+            }
+            // Log rejection reason
+            CapstoneProposalHistory capstoneProposalHistory = historyMapper.toHistory(proposal, "Rejected by Reviewer Code: " + reviewerCode + ", Reason: " + reason);
+            historyRepository.save(capstoneProposalHistory);
+        }
+        if (countApprovals( proposal) >= 2) {
             proposal.setStatus(CapstoneProposal.ProposalStatus.REVIEW_1);
-            proposal.setReview1At(LocalDateTime.now());
-
-            // Save history
-            CapstoneProposalHistory history = historyMapper.toHistory(
-                    proposal,
-                    "Proposal approved by 2 reviewers. Changed status to REVIEW_1"
-            );
-            historyRepository.save(history);
         }
+
+
+
 
         return capstoneProposalRepository.save(proposal);
+    }
+
+    public int reviewerIndex ( int proposalId, String reviewerCode) {
+
+        CapstoneProposal proposal = capstoneProposalRepository.findById(proposalId).orElse(null);
+        Semester semester = proposal.getSemester();
+        if ( semester.getReviewerCode1().equals(reviewerCode) ) {
+            return 1;
+        }
+        else if ( semester.getReviewerCode2().equals(reviewerCode) ) {
+            return 2;
+        }
+        else if ( semester.getReviewerCode3().equals(reviewerCode) ) {
+            return 3;
+        }
+        else if ( semester.getReviewerCode4().equals(reviewerCode) ) {
+            return 4;
+        }
+
+
+
+        return -1;
     }
 
     /**
@@ -276,36 +344,7 @@ public class CapstoneProposalService {
         return false;
     }
 
-    /**
-     * Record reviewer approval in the proposal
-     */
-    private void recordReviewerApproval(CapstoneProposal proposal, String reviewerCode) {
-        // Initialize reviewer if not exists
-        if (proposal.getReviewer() == null) {
-            proposal.setReviewer(new CapstoneProposal.Reviewer());
-        }
 
-        CapstoneProposal.Reviewer reviewer = proposal.getReviewer();
-
-        // Find first available slot and record approval
-        if (reviewer.getReviewer1Code() == null || reviewer.getReviewer1Code().equals(reviewerCode)) {
-            reviewer.setReviewer1Code(reviewerCode);
-            proposal.setIsReviewerApprove1(true);
-        } else if (reviewer.getReviewer2Code() == null || reviewer.getReviewer2Code().equals(reviewerCode)) {
-            reviewer.setReviewer2Code(reviewerCode);
-            proposal.setIsReviewerApprove2(true);
-        } else if (reviewer.getReviewer3Code() == null || reviewer.getReviewer3Code().equals(reviewerCode)) {
-            reviewer.setReviewer3Code(reviewerCode);
-            proposal.setIsReviewerApprove3(true);
-        } else if (reviewer.getReviewer4Code() == null || reviewer.getReviewer4Code().equals(reviewerCode)) {
-            reviewer.setReviewer4Code(reviewerCode);
-            proposal.setIsReviewerApprove4(true);
-        }
-    }
-
-    /**
-     * Count how many reviewers have approved
-     */
     private int countApprovals(CapstoneProposal proposal) {
         int count = 0;
 

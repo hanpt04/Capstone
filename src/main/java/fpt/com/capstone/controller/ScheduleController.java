@@ -28,4 +28,9 @@ public class ScheduleController {
         return  scheduleService.createSchedule(request);
     }
 
+//    @PutMapping
+//    public Schedule updateSchedule(@RequestBody Schedule schedule) {
+//        return scheduleService.updateSchedule(schedule);
+//    }
+
 }

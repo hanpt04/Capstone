@@ -1,6 +1,7 @@
 package fpt.com.capstone.controller;
 
 import fpt.com.capstone.model.CapstoneProposal;
+import fpt.com.capstone.model.DTO.DuplicateCheckResult;
 import fpt.com.capstone.model.Ratio;
 import fpt.com.capstone.repository.RatioRepository;
 import fpt.com.capstone.service.CapstoneProposalService;
@@ -39,9 +40,17 @@ public class CapstoneProposalController {
         return capstoneProposalService.reviewProposal( proposalId, isApproved, reason, reviewerCode);
     }
 
+
+
     @PutMapping("/update-review")
     public CapstoneProposal updateReview(@RequestParam int proposalId,  @RequestParam LocalDateTime date ,@RequestParam int reviewTime, @RequestParam String mentorCode1, @RequestParam String mentorCode2, @RequestParam String mentorName1, @RequestParam String mentorName2) {
         return capstoneProposalService.updateReview(proposalId, date, reviewTime, mentorCode1, mentorCode2, mentorName1, mentorName2);
+    }
+
+    @GetMapping("check-duplicate/{proposalId}")
+    public DuplicateCheckResult checkDuplicate(@PathVariable int proposalId) {
+
+        return capstoneProposalService.checkDuplicate(proposalId);
     }
 
 

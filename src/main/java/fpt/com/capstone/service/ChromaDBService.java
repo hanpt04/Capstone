@@ -96,7 +96,7 @@ public class ChromaDBService {
                 } else {
                     log.info("✅ No duplicate - distance {} >= threshold {}",
                             distance, DUPLICATE_THRESHOLD);
-                    return new DuplicateCheckResult(false, null, null);
+                    return new DuplicateCheckResult(false, distance, numericId);
                 }
             }
 

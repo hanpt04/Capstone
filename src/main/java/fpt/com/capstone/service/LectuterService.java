@@ -26,4 +26,8 @@ public class LectuterService {
     public Lecturer findByCode(String code) {
         return lecturerRepository.findByLecturerCode(code);
     }
+
+    public Lecturer createLecturer(Lecturer lecturer) {
+        return lecturerRepository.save(lecturer);
+    }
 }

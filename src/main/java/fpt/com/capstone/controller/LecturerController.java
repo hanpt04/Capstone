@@ -31,5 +31,10 @@ public class LecturerController {
         return lectuterService.findByCode(code);
     }
 
+    @PostMapping
+    public Lecturer createLecturer(@RequestBody Lecturer lecturer) {
+        return lectuterService.createLecturer(lecturer);
+    }
+
 
 }

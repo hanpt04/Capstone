@@ -36,7 +36,7 @@ public class ChromaDBController {
     }
 
 
-    @PostMapping("/sync/{proposalId}")
+    @PostMapping("/{proposalId}/sync")
     public ResponseEntity<String> syncProposal(@PathVariable Integer proposalId) {
         try {
             CapstoneProposal proposal = proposalService.findById(proposalId);
@@ -54,7 +54,7 @@ public class ChromaDBController {
     /**
      * Xóa một proposal khỏi ChromaDB
      */
-    @DeleteMapping("/delete/{proposalId}")
+    @DeleteMapping("/{proposalId}")
     public ResponseEntity<String> deleteProposal(@PathVariable Integer proposalId) {
         try {
             chromaDBService.deleteProposal(proposalId);

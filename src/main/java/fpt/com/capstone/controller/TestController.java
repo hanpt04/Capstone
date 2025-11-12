@@ -26,7 +26,7 @@ public class TestController {
     /**
      * Nhận proposal và upload lên ChromaDB luôn
      */
-    @PostMapping("/upload-proposal")
+    @PostMapping("/proposal")
     public ResponseEntity<String> uploadProposal(@RequestBody CapstoneProposal proposal) {
         try {
             System.out.println("=== Step 1: Creating collection ===");

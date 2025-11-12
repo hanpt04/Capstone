@@ -70,7 +70,7 @@ public class AuthController {
      * PUT /api/auth/change-password
      * Đổi mật khẩu
      */
-    @PutMapping("/change-password")
+    @PutMapping("/password-reset")
     @PreAuthorize("hasAnyRole('ADMIN','MENTOR')")
     public ResponseEntity<MessageResponse> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
         MessageResponse response = authService.changePassword(request);

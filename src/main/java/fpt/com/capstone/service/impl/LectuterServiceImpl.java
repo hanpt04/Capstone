@@ -23,4 +23,9 @@ public class LectuterServiceImpl implements LectuterService {
     public Lecturer getLecturerById(int id) {
         return lecturerRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public List<Lecturer> saveAll(List<Lecturer> lecturers) {
+        return lecturerRepository.saveAll(lecturers);
+    }
 }

@@ -8,4 +8,6 @@ public interface LectuterService {
     List<Lecturer> getAllLecturers();
     Lecturer getLecturerById(int id);
 
+    List<Lecturer> saveAll(List<Lecturer> lecturers);
+
 }

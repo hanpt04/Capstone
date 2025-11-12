@@ -1,11 +1,14 @@
 package fpt.com.capstone.controller;
 
 
+import fpt.com.capstone.exception.CustomException;
 import fpt.com.capstone.model.CapstoneProposal;
 import fpt.com.capstone.repository.CapstoneProposalRepository;
+import fpt.com.capstone.service.CapstoneProposalService;
 import fpt.com.capstone.service.ChromaDBService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ChromaDBController {
 
     private final ChromaDBService chromaDBService;
-    private final CapstoneProposalRepository proposalRepository;
+    private final CapstoneProposalService proposalService;
 
     /**
      * Kiểm tra kết nối ChromaDB
@@ -36,8 +39,10 @@ public class ChromaDBController {
     @PostMapping("/sync/{proposalId}")
     public ResponseEntity<String> syncProposal(@PathVariable Integer proposalId) {
         try {
-            CapstoneProposal proposal = proposalRepository.findById(proposalId)
-                    .orElseThrow(() -> new RuntimeException("Proposal not found"));
+            CapstoneProposal proposal = proposalService.findById(proposalId);
+            if (proposal == null) {
+                throw new CustomException("Proposal not found for id: " + proposalId, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
             chromaDBService.uploadProposal(proposal);
             return ResponseEntity.ok("Synced proposal " + proposalId + " to ChromaDB");
         } catch (Exception e) {
